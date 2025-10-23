@@ -2,8 +2,9 @@
 
 1. Clone the submodules
 ```bash
+mkdir stratus-agent
 cd stratus-agent
-git clone https://github.com/microsoft/AIOpsLab.git --recursive
+git clone --recurse-submodules git@github.com:xlab-uiuc/Stratus-agent.git
 ```
 
 2. Ensure you are in the Python 3.12 environment.
