@@ -115,7 +115,20 @@ class ReadTracesTool(BaseTool):
             terminal_nodes = terminal_nodes[terminal_nodes["has_error"]]
 
             for index, row in terminal_nodes.iterrows():
-                fault_services.append((row["service_name"], translate(row["operation_name"])))
+                parent_id = row["parent_span"]
+                parent_service, parent_operation, parent_code = ("ROOT", "ROOT", "ROOT")
+                if parent_id in trace.index:
+                    parent_entry = trace.loc[parent_id]
+                    if len(parent_entry.index):
+                        parent_service, parent_operation, parent_code = (parent_entry["service_name"].iloc[0], parent_entry["operation_name"].iloc[0], parent_entry["response"].iloc[0])
+                fault_services.append((
+                    row["service_name"], 
+                    translate(row["operation_name"]), 
+                    row["response"], 
+                    parent_service, 
+                    translate(parent_operation), 
+                    parent_code
+                ))
 
         # Remove duplicates
         fault_services = list(set(fault_services))
@@ -128,8 +141,8 @@ class ReadTracesTool(BaseTool):
 
         summary_list = []
         for id, pack in enumerate(fault_services):
-            service, operation = pack
-            summary_list.append(f'{id + 1}: {{service: "{service}", operation: "{operation}"}}')
+            service, operation, code, parent_service, parent_operation, parent_code = pack
+            summary_list.append(f'{id + 1}: {{service: "{service}", operation: "{operation}", status_code: "{code}", calling_service: "{parent_service}", calling_operation: "{parent_operation}", calling_status_code: "{parent_code}"}}')
 
         summary += "\n".join(summary_list)
 

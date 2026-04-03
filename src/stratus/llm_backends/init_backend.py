@@ -216,6 +216,8 @@ def get_llm_backend_for_agents():
     else:
         # Usage example:
         # model="watsonx/meta-llama/llama-3-1-8b-instruct",
+        # token_key = "max_completion_tokens" if PROVIDER_AGENTS == "openai" else "max_tokens"
+        max_tokens = {"max_tokens": MAX_TOKENS_AGENTS}
         return LLM(
             model=f"{PROVIDER_AGENTS}/{MODEL_AGENTS}",
             base_url=URL_AGENTS,
@@ -225,7 +227,7 @@ def get_llm_backend_for_agents():
             top_p=TOP_P_AGENTS,
             temperature=TEMPERATURE_AGENTS,
             reasoning_effort=REASONING_EFFORT_AGENTS,
-            max_tokens=MAX_TOKENS_AGENTS,
+            **max_tokens
         )
 
 

@@ -43,6 +43,8 @@ class LiteLLMBackend:
         max_tokens: int,
         extra_headers: Optional[Dict[str, str]] = None,
     ):
+        # token_key = "max_completion_tokens" if provider == "openai" else "max_tokens"
+        self.max_tokens_key = {"max_tokens": max_tokens}
         self.provider = provider
         self.model_name = model_name
         self.url = url
@@ -80,7 +82,7 @@ class LiteLLMBackend:
             "temperature": self.temperature,
             "top_p": self.top_p,
             "reasoning_effort": self.reasoning_effort,
-            "max_tokens": self.max_tokens,
+            **self.max_tokens_key,
             "messages": messages,
             "extra_headers": self.extra_headers,
         }
