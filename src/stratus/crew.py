@@ -45,7 +45,7 @@ from stratus.tools.report_generation.diagnosis_json_report import DiagnosisJSONR
 from stratus.tools.report_generation.mitigation_json_report import MitigationJSONReportCustomTool
 
 load_dotenv()
-
+from stratus.voting import log_deliberation_summary
 
 class StratusPreprocessConfig(type):
 
@@ -95,6 +95,7 @@ class StratusCrew(metaclass=StratusPreprocessConfig):
         self.task_type = task_type
         self.callback_task = None
         self.callback_agent = None
+        self._voting_logger_enabled = os.getenv("USE_VOTING_S2", "false").lower() == "true"
         if self.config.use_rollback_stack:
             self.action_stack = ActionStack()
         else:
@@ -107,6 +108,17 @@ class StratusCrew(metaclass=StratusPreprocessConfig):
                 self.callback_task = callback_task
         except KeyError as e:
             print("No handlers (or one of the handlers) spotted at this time:", e)
+
+        if self._voting_logger_enabled:
+            original_callback = self.callback_agent
+            def voting_callback(agent_output):
+                if hasattr(agent_output, 'text'):
+                    log_deliberation_summary(agent_output.text)
+                elif isinstance(agent_output, str):
+                    log_deliberation_summary(agent_output)
+                if original_callback:
+                    return original_callback(agent_output)
+            self.callback_agent = voting_callback
 
     @agent
     def sre_diagnosis_agent(self) -> Agent:

@@ -154,4 +154,5 @@ trace_output/
 poetry.lock
 
 eval/*/
-kubectl_states/
+kubectl_states/.env
+.env
