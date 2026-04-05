@@ -29,6 +29,7 @@ from stratus.tools.aiopslab.get_logs import GetLogsTool
 from stratus.tools.aiopslab.get_traces import GetTracesTool
 from stratus.tools.aiopslab.read_traces import ReadTracesTool
 from stratus.tools.aiopslab.submission import get_submission_tool
+from stratus.tools.aiopslab.get_runbook import GetRunbooksTool
 
 # from stratus.tools.code_generation.nl2script import NL2ScriptCustomTool
 from stratus.tools.grafana.get_alerts import GetAlertsCustomTool
@@ -158,6 +159,7 @@ class StratusCrew(metaclass=StratusPreprocessConfig):
             tools = [
                 # GetMetricsTool(self.generator),
                 # ReadMetricsTool(self.generator, llm_backend=get_llm_backend_for_tools()),
+                GetRunbooksTool(self.generator),
                 GetTracesTool(self.generator),
                 ReadTracesTool(self.generator),
                 GetLogsTool(self.generator),
@@ -201,6 +203,7 @@ class StratusCrew(metaclass=StratusPreprocessConfig):
             tools = [
                 # GetMetricsTool(self.generator),
                 # ReadMetricsTool(self.generator, llm_backend=get_llm_backend_for_tools()),
+                GetRunbooksTool(self.generator),
                 GetTracesTool(self.generator),
                 ReadTracesTool(self.generator),
                 GetLogsTool(self.generator),

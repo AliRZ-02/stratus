@@ -38,4 +38,4 @@ class GetLogsTool(BaseTool):
         # print(f'Fetching logs for namespace: {namespace}, service: {service}')
         result = self.generator.send(f'```\nget_logs("{namespace}", "{service}")\n```')
         # print('Got result:', result)
-        return result[-8000:]
+        return result[-8000:] + ".\n\n You may find it useful to call the get_runbooks function to get some runbooks that best describe this issue. You will have to pass a summarized view of the issue at hand (max 50 words) to the function."
