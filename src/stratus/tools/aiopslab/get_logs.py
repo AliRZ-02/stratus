@@ -42,9 +42,9 @@ class GetLogsTool(BaseTool):
         # print(f'Fetching logs for namespace: {namespace}, service: {service}')
         result = self.generator.send(f'```\nget_logs("{namespace}", "{service}")\n```')
         # print('Got result:', len(result))
-        filtered = self._filter_logs(result)
+        filtered = self._filter_logs(result.replace("Please take the next action", ""))
         # print(f'Filtered Result: {len(filtered)}')
-        return filtered[-8000:]
+        return filtered + "\n\n These logs are truncated to pay extra attention to each name, value or error provided since it may have occurred more than once.\n\nPlease take the next action"
     
     def _filter_logs(self, logString):
         logs = logString.split("\n")
@@ -64,7 +64,7 @@ class GetLogsTool(BaseTool):
             if N >= len(logs) - 5:
                 candidates.add(N)
             elif self._has_failure_keywords(logLine):
-                for i in range(N - 1, N + 1):
+                for i in range(N - 3, N + 1):
                     candidates.add(i)
             
             N += 1
@@ -101,7 +101,7 @@ class GetLogsTool(BaseTool):
 
     def _has_failure_keywords(self, line):
         # I got this from the logsage paper pseudocode
-        KEYWORDS = ["fatal",  "fail", "panic", "error", "exit", "kill", "err", "missing", "exception"]
+        KEYWORDS = ["fatal",  "fail", "panic", "error", "exit", "kill", "err", "missing", "exception", "refuse"]
 
         toSearch = line.lower()
         for word in KEYWORDS:

@@ -2,20 +2,13 @@ detection:
   # - k8s_target_port-misconfig-detection-1
   # - k8s_target_port-misconfig-detection-2
   # - k8s_target_port-misconfig-detection-3
-#   - auth_miss_mongodb-detection-1
-  - revoke_auth_mongodb-detection-1
-#   - pod_failure_hotel_res-detection-1
-#   - network_loss_hotel_res-detection-1
-#   - noop_detection_social_network-1
-
-# localization:
-  # - k8s_target_port-misconfig-localization-1
-  # - k8s_target_port-misconfig-localization-2
-  # - auth_miss_mongodb-localization-1
-  # - pod_failure_hotel_res-localization-1
-
-# analysis:
-#   - k8s_target_port-misconfig-analysis-1
+  # - auth_miss_mongodb-detection-1
+  # - revoke_auth_mongodb-detection-1
+  # - revoke_auth_mongodb-detection-2
+  # - user_unregistered_mongodb-detection-1
+  # - user_unregistered_mongodb-detection-2
+  # - pod_failure_hotel_res-detection-1
+  # - pod_kill_hotel_res-detection-1
 
 # mitigation:
 #   - k8s_target_port-misconfig-mitigation-1
