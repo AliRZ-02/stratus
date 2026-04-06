@@ -9,6 +9,8 @@ setup_cluster_only='false'
 arch=''
 output_dir=''
 
+docker login
+
 function detect_architecture() {
   arch="$(uname -m)"
   if [[ "$arch" = x86_64* ]]; then
