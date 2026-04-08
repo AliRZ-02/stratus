@@ -1,5 +1,6 @@
 sre_diagnosis_tool_task:
   description: 
+    Run a 3-persona comittee meeting to do the following --- 
     Diagnose the problem in the cloud. Use the tools provided to gather information to help you with diagnosis.
     Diagnosis needs to go as deep as possible. In some cases you should follow the information like logs of errorneous services to find the root cause.
     The problem description is '''{problem_desc}'''.
