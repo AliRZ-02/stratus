@@ -1,3 +1,6 @@
+# S3: RAG
+The rag.py file has the document embedding code for the runbooks
+
 # Development Instructions
 
 1. Clone the submodules
