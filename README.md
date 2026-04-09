@@ -1,3 +1,6 @@
+# ECE 1770H Stratus Enhancements
+- See `docs/` for more details.
+
 # Development Instructions
 
 1. Clone the submodules
